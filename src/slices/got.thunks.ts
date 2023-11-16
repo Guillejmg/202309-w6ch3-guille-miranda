@@ -2,14 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { repoSerial } from '../services/api.repo.got';
 import { CharacterStructure } from '../models/character';
 
-// Thunk -> función devuelve un actionCreator
-// Parámetros
-// - nombre acción
-// - function action creator
-
-// Tipado
-// - retorno de la función -> payload de la acción síncrona
-// - parámetros de la función
 
 export const loadCharacterThunk = createAsyncThunk<CharacterStructure[], repoSerial>(
   'tasks/load',
@@ -17,20 +9,16 @@ export const loadCharacterThunk = createAsyncThunk<CharacterStructure[], repoSer
     const characters = await repo.getCharacters();
     return characters;
   }
-); // => {
-// type:  'tasks/load'
-// payload: tasks
-// }
+); 
 
-export const updateTaskThunk = createAsyncThunk<
+export const updateCharacterThunk = createAsyncThunk<
   CharacterStructure,
   {
     repo: repoSerial;
-    name: CharacterStructure['name'];
+    id: CharacterStructure['id'];
     updatedCharacter: Partial<CharacterStructure>;
   }
->('tasks/update', async ({ repo, name, updatedCharacter }) => {
-  const finalCharacter = await repo.updateCharacter(name, updatedCharacter);
+>('tasks/update', async ({ repo, id, updatedCharacter }) => {
+  const finalCharacter = await repo.updateCharacter(id, updatedCharacter);
   return finalCharacter;
 });
-
