@@ -23,6 +23,7 @@ export abstract class Character {
   }
 }
 export type CharacterStructure = {
+  id: string;
   name: string;
   family: string;
   age: number;

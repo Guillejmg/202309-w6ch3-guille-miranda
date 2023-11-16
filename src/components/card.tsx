@@ -1,12 +1,23 @@
 import { CharacterStructure } from "../models/character"
+import { useCharacters } from "../hooks/useCharacter"
 
 type Props={
-  info:CharacterStructure
+  info:CharacterStructure;
 }
 
 export function Card ({info}:Props){
 
+  const {updateCharacter} = useCharacters();
 
+  const handleClickDead = (id: string) => {
+    updateCharacter(id, { isAlive: true});
+    const isDead = info.isAlive === true ? false : true;
+    return isDead
+  };
+
+  const handleClickSpeak = (message: string) => {
+    console.log(message);
+  };
 
   return(
   <li className="character col">
@@ -14,7 +25,9 @@ export function Card ({info}:Props){
         <img
           src={`${info.name}.jpg`}
           alt={info.name + ' ' + info.family}
-          className="character__picture card-img-top"
+          className= {info.isAlive
+          ? 'character__picture card-img-top'
+          : 'character__picture card-img-top dead'}
         />
         <div className="card-body">
           <h2 className="character__name card-title h4">
@@ -53,8 +66,14 @@ export function Card ({info}:Props){
               )}
             </ul>
             <div className="character__actions">
-              <button className="character__action btn">habla</button>
-              <button className="character__action btn">muere</button>
+              <button 
+              className="character__action btn"
+              onClick={() => handleClickSpeak(info.message)}
+              >habla</button>
+              <button 
+              className="character__action btn"
+              onClick={() => handleClickDead(info.id)}
+              >muere</button>
             </div>
           </div>
         </div>

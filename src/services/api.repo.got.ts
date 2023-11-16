@@ -23,4 +23,3 @@ export class repoSerial {
     return response.json();
   }
 }
-
